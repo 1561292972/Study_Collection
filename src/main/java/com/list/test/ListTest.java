@@ -14,12 +14,14 @@ import java.util.List;
  */
 public class ListTest {
     public static void main(String[] args) {
+        //ArrayListLeiLei
         ListLeilei<String> list = new ArrayListLeiLei<>();
         list.add("1");
         list.add("2");
         int oldCapacity=26;
         System.out.println(oldCapacity >> 1);
 
+        //ArrayListLeiLei
 
 
     }
