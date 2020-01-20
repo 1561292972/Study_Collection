@@ -72,10 +72,28 @@ public class RedBlackTreeLeilei {
             Node g= newNode.parent.parent;
             //获取父亲节点
             Node p=newNode.parent;
-            //场景1 父亲节点与当前节点都为红的情况下,并且叔叔节点为黑色或者空的情况下,并且当前节点在右子树的情况下,才能开始左旋
+
+            //场景1图122  父亲节点与当前节点都为红的情况下,并且叔叔节点为红色或者空的情况下,开始变色,把爷爷下两个子节点改为黑色
+            if((g.left!=null && NodeColorLeilei.red.equals(g.left.color))){
+                //叔叔节点改为黑色
+                g.left.color=NodeColorLeilei.black;
+                //父亲节点改为黑色
+                p.color=NodeColorLeilei.black;
+                //爷爷节点不为root改为红色
+                if(g!=root){
+                    g.color=NodeColorLeilei.red;
+                }
+                return;
+            }
+
+            //场景2 父亲节点与当前节点都为红的情况下,并且叔叔节点为黑色或者空的情况下,并且当前节点在右子树的情况下,才能开始左旋
             if(g.left==null||NodeColorLeilei.black.equals(g.left.color) && (newNode.parent.right==newNode)){
                 //左旋转
                 leftRotate(g);
+                //修复颜色问题  将父节点改为黑色
+                p.color=NodeColorLeilei.black;
+                //将祖节点改为红色
+                g.color=NodeColorLeilei.red;
             }
         }
     }
@@ -153,10 +171,25 @@ public class RedBlackTreeLeilei {
     }
 
 
+    private Node getMaxNode(Node node){
+          if(node!=null){
+                if(node.right!=null){
+                    return getMaxNode(node.right);
+                }else{
+                    return node;
+                }
+          }
+          return null;
+    }
     public static void main(String[] args) {
         RedBlackTreeLeilei redBlackTreeLeilei = new RedBlackTreeLeilei();
         redBlackTreeLeilei.insert(1);
         redBlackTreeLeilei.insert(2);
         redBlackTreeLeilei.insert(3);
+        //redBlackTreeLeilei.insert(4);
+        Node maxNode =redBlackTreeLeilei.getMaxNode(redBlackTreeLeilei.root);
+        System.out.println(maxNode.value);
+        //当前有10亿条数据,如最快找到最大值,如何找到最小值,红黑树,或者平衡二叉树
+
     }
 }
