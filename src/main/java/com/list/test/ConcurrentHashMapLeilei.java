@@ -1,5 +1,7 @@
 package com.list.test;
 
+import com.list.classExt.MyConsurrentHashMap;
+
 import java.util.Hashtable;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,5 +26,26 @@ public class ConcurrentHashMapLeilei {
          * 1.8 ConcurrentHashMap 删除分段锁技术 改用无CAS无锁机制+synchronized
          */
         ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
+
+
+        MyConsurrentHashMap<String,String>  stringStringMyConsurrentHashMap=new MyConsurrentHashMap();
+        stringStringMyConsurrentHashMap.put("蕾蕾","蚂蚁课堂");
+        System.out.println(stringStringMyConsurrentHashMap.get("蕾蕾"));
+        /**
+         * 1.7 ConcurrentHashMap源码 采用分段锁的机制,分为多个不同的Segment/分成16个不同的Segment  每个Segment都有自己独立的锁
+         * 分成16个不同的Segment,每个Segment是独立的table,Segment其实就是我们的hashtable,
+         * 但是 Segment底层是继承了Reentrantlock去上锁
+         * 根据key计算index位置,就是存放在哪个Segment里
+         * ConcurrentHashMap->Segment(16个 hashtable)->hashEntry
+         * jdk1.7hashmap存在什么多线程每次扩容会存在死循环问题  Segment里肯定没有这个问题存在因为上了重入锁
+         *
+         */
+        /**
+         * 1.8 ConcurrentHashMap源码 采用 CAS无锁机制
+         * new Node采用cas乐观锁机制保证线程安全问题
+         * 如果计算index产生了冲突,使用synchronized上锁
+         * 锁的粒度更加精细锁的事node节点
+         */
+
     }
 }

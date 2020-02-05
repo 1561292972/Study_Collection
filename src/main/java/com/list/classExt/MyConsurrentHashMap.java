@@ -33,7 +33,7 @@ public class MyConsurrentHashMap<K,V> {
         hashtable.put(k,v);
         hashtables[index]=hashtable;
     }
-    public V  get(K k,V v){
+    public V  get(K k){
         //1.获取hash值
         int hash = hash(k);
         //2.计算index 存在哪个hashtable里面
